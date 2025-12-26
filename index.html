@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>کافه نان آنان | طعم اصیل سلامت</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@100;300;400;700;900&display=swap" rel="stylesheet">
+
+    <style>
+        /* --- تعریف متغیرهای رنگی (Design System) --- */
+        :root {
+            --primary: #006D77;      /* سبز کله‌غازی */
+            --primary-dark: #004e57;
+            --secondary: #8D5524;    /* قهوه‌ای گرم */
+            --bg-color: #FFFBEB;     /* کرم روشن */
+            --accent: #C5A059;       /* طلایی مات */
+            --text-dark: #2C2C2C;
+            --text-light: #5e5e5e;
+            --white: #ffffff;
+            --radius: 12px;
+            --shadow: 0 10px 30px rgba(0, 109, 119, 0.1);
+        }
+
+        /* --- تنظیمات پایه (Reset & Base) --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Vazirmatn', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-dark);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        a { text-decoration: none; color: inherit; transition: 0.3s; }
+        ul { list-style: none; }
+
+        /* --- کامپوننت دکمه --- */
+        .btn {
+            display: inline-block;
+            padding: 12px 28px;
+            border-radius: 8px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+        }
+
+        .btn-primary {
+            background-color: var(--primary);
+            color: var(--white);
+            box-shadow: 0 4px 15px rgba(0, 109, 119, 0.3);
+        }
+
+        .btn-primary:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
+        .btn-outline {
+            border: 2px solid var(--secondary);
+            color: var(--secondary);
+            background: transparent;
+        }
+
+        .btn-outline:hover {
+            background: var(--secondary);
+            color: var(--white);
+        }
+
+        /* --- نوبار (Navigation) --- */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 5%;
+            background-color: rgba(255, 251, 235, 0.95);
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 900;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+
+        .nav-links a {
+            color: var(--text-dark);
+            font-weight: 500;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        .cart-icon {
+            position: relative;
+            cursor: pointer;
+        }
+
+        .cart-badge {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: var(--secondary);
+            color: white;
+            font-size: 0.7rem;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* --- هدر اصلی (Hero Section) --- */
+        .hero {
+            position: relative;
+            height: 85vh;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: var(--white);
+            /* عکس پس‌زمینه پاییزی */
+            background: url('https://images.unsplash.com/photo-1509460592758-2947e2219717?q=80&w=1920&auto=format&fit=crop') no-repeat center center/cover;
+        }
+
+        /* لایه تاریک سبز رنگ */
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(0, 109, 119, 0.85), rgba(141, 85, 36, 0.6));
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 800px;
+            padding: 20px;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 900;
+            margin-bottom: 15px;
+            line-height: 1.2;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            opacity: 0.9;
+        }
+
+        /* --- نوار اعتماد (Trust Bar) --- */
+        .trust-bar {
+            background-color: #EFE8D8; /* کمی تیره‌تر از پس زمینه */
+            padding: 30px 5%;
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            gap: 20px;
+            border-bottom: 1px solid rgba(141, 85, 36, 0.1);
+        }
+
+        .trust-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            color: var(--secondary);
+            font-weight: 700;
+        }
+
+        .trust-item svg {
+            width: 32px;
+            height: 32px;
+            fill: var(--accent);
+        }
+
+        /* --- ویترین محصولات (Best Sellers) --- */
+        .section-title {
+            text-align: center;
+            margin: 60px 0 40px;
+            color: var(--secondary);
+            font-size: 2rem;
+            position: relative;
+        }
+        
+        /* خط تزئینی زیر تیتر */
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 3px;
+            background: var(--accent);
+            margin: 10px auto 0;
+            border-radius: 2px;
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            padding: 0 5% 60px;
+        }
+
+        .product-card {
+            background: var(--white);
+            border-radius: var(--radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s;
+            position: relative;
+            border: 1px solid rgba(0,0,0,0.03);
+        }
+
+        .product-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background-color: var(--primary);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            z-index: 10;
+        }
+        
+        .badge.special {
+            background-color: var(--accent);
+            color: var(--text-dark);
+        }
+
+        .product-img {
+            height: 250px;
+            width: 100%;
+            object-fit: cover;
+            /* رنگ پس‌زمینه موقت در صورت لود نشدن عکس */
+            background-color: #ddd; 
+        }
+
+        .product-info {
+            padding: 20px;
+        }
+
+        .product-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: var(--text-dark);
+        }
+
+        .product-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 15px;
+        }
+
+        .price {
+            color: var(--primary);
+            font-weight: 900;
+            font-size: 1.1rem;
+        }
+
+        .add-btn {
+            background: #e6f0f1;
+            color: var(--primary);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: 0.2s;
+            cursor: pointer;
+        }
+
+        .add-btn:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        /* --- درباره ما (About) --- */
+        .about-section {
+            display: flex;
+            flex-wrap: wrap;
+            padding: 60px 5%;
+            background-color: var(--white);
+            align-items: center;
+        }
+
+        .about-text {
+            flex: 1;
+            min-width: 300px;
+            padding-left: 40px;
+        }
+
+        .about-image {
+            flex: 1;
+            min-width: 300px;
+            position: relative;
+        }
+
+        .about-image img {
+            width: 100%;
+            border-radius: var(--radius);
+            box-shadow: 20px 20px 0 var(--accent); /* افکت گرافیکی */
+        }
+
+        .about-text h2 {
+            color: var(--primary);
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
+
+        .about-text p {
+            color: var(--text-light);
+            margin-bottom: 25px;
+            text-align: justify;
+        }
+
+        /* --- فوتر --- */
+        footer {
+            background-color: var(--secondary);
+            color: #EFE8D8;
+            padding: 60px 5% 20px;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-col h4 {
+            color: var(--accent);
+            margin-bottom: 20px;
+            font-size: 1.2rem;
+        }
+
+        .footer-col ul li {
+            margin-bottom: 10px;
+        }
+
+        .footer-col ul li a:hover {
+            color: var(--accent);
+            padding-right: 5px;
+        }
+
+        .copyright {
+            text-align: center;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            padding-top: 20px;
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        /* --- ریسپانسیو --- */
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2.2rem; }
+            .nav-links { display: none; } /* منوی موبایل ساده شده برای دمو */
+            .trust-bar { flex-direction: column; align-items: center; text-align: center;}
+            .about-section { flex-direction: column-reverse; gap: 40px; }
+            .about-text { padding-left: 0; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="logo">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="var(--primary)"><path d="M12,2C6.48,2,2,6.48,2,12s4.48,10,10,10s10-4.48,10-10S17.52,2,12,2z M12,17c-2.76,0-5-2.24-5-5s2.24-5,5-5s5,2.24,5,5 S14.76,17,12,17z"/></svg>
+            کافه آنان
+        </div>
+        <ul class="nav-links">
+            <li><a href="#">صفحه اصلی</a></li>
+            <li><a href="#">منو و سفارش</a></li>
+            <li><a href="#">داستان ما</a></li>
+            <li><a href="#">بلاگ سلامت</a></li>
+        </ul>
+        <div class="cart-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
+            <span class="cart-badge">0</span>
+        </div>
+    </nav>
+
+    <header class="hero">
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <h1>عطر نان، هوای پاییز و لبخند «آقای مجری»</h1>
+            <p>کافه نان آنان؛ طعم اصیل سلامت در سلیمان خاطر. <br>کروسان‌های محبوب ایرج طهماسب را داغ تحویل بگیرید.</p>
+            <a href="#products" class="btn btn-primary">سفارش آنلاین و مشاهده منو</a>
+        </div>
+    </header>
+
+    <section class="trust-bar">
+        <div class="trust-item">
+            <svg viewBox="0 0 24 24"><path d="M12 2C12 2 12.8 5.6 14.8 7.6C16.8 9.6 20.4 10.4 20.4 10.4C20.4 10.4 16.8 11.2 14.8 13.2C12.8 15.2 12 18.8 12 18.8C12 18.8 11.2 15.2 9.2 13.2C7.2 11.2 3.6 10.4 3.6 10.4C3.6 10.4 7.2 9.6 9.2 7.6C11.2 5.6 12 2 12 2Z"/></svg>
+            <span>مواد اولیه سالم و طبیعی</span>
+        </div>
+        <div class="trust-item">
+            <svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+            <span>مدیریت و ظرافت زنانه</span>
+        </div>
+        <div class="trust-item">
+            <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+            <span>انتخاب ایرج طهماسب</span>
+        </div>
+    </section>
+
+    <section id="products">
+        <h2 class="section-title">پیشنهادهای پاییزی آنان</h2>
+        <div class="products-grid">
+            
+            <div class="product-card">
+                <span class="badge special">انتخاب آقای مجری</span>
+                <img src="https://images.unsplash.com/photo-1555507036-ab1f4038808a?q=80&w=1000&auto=format&fit=crop" alt="کروسان" class="product-img">
+                <div class="product-info">
+                    <h3 class="product-title">کروسان کره‌ای کلاسیک</h3>
+                    <p style="font-size: 0.9rem; color: #777;">تهیه شده با کره حیوانی خالص، بافتی هزارلا و ترد.</p>
+                    <div class="product-footer">
+                        <span class="price">۷۵,۰۰۰ تومان</span>
+                        <div class="add-btn" onclick="addToCart()">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <span class="badge">پرفروش</span>
+                <img src="https://images.unsplash.com/photo-1509440159596-0249088772ff?q=80&w=1000&auto=format&fit=crop" alt="نان خمیر ترش" class="product-img">
+                <div class="product-info">
+                    <h3 class="product-title">نان خمیر ترش گردویی</h3>
+                    <p style="font-size: 0.9rem; color: #777;">تخمیر ۴۸ ساعته، بدون جوش شیرین و بهبود دهنده.</p>
+                    <div class="product-footer">
+                        <span class="price">۱۲۰,۰۰۰ تومان</span>
+                        <div class="add-btn" onclick="addToCart()">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <img src="https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?q=80&w=1000&auto=format&fit=crop" alt="لاته" class="product-img">
+                <div class="product-info">
+                    <h3 class="product-title">پکیج لاته و دنیش</h3>
+                    <p style="font-size: 0.9rem; color: #777;">ترکیب برنده برای عصرهای پاییزی. گرم و تازه.</p>
+                    <div class="product-footer">
+                        <span class="price">۱۱۰,۰۰۰ تومان</span>
+                        <div class="add-btn" onclick="addToCart()">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <section class="about-section">
+        <div class="about-text">
+            <h2>داستان چهار بانو و یک کافه</h2>
+            <p>ما چهار دوست بودیم که دغدغه‌ی نان سالم داشتیم. در قلب سلیمان خاطر، «آنان» را ساختیم تا عطر نان واقعی را زنده کنیم. استفاده از خمیر ترش طبیعی و حذف جوش شیرین خط قرمز ماست.</p>
+            <p>خوشحالیم که میزبان هنرمندانی چون <strong>ایرج طهماسب</strong> هستیم که طعم اصالت را می‌شناسند و به ما اعتماد کردند.</p>
+            <a href="#" class="btn btn-outline">ادامه داستان ما &larr;</a>
+        </div>
+        <div class="about-image">
+            <img src="https://images.unsplash.com/photo-1556740738-b6a63e27c4df?q=80&w=1000&auto=format&fit=crop" alt="محیط کافه">
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-grid">
+            <div class="footer-col">
+                <h4>دسترسی سریع</h4>
+                <ul>
+                    <li><a href="#">منوی کافه</a></li>
+                    <li><a href="#">سفارش سازمانی</a></li>
+                    <li><a href="#">درباره ما</a></li>
+                    <li><a href="#">تماس با ما</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>تماس با آنان</h4>
+                <ul>
+                    <li>آدرس: تهران، خیابان سلیمان خاطر، پلاک ۱۲</li>
+                    <li>تلفن: ۰۲۱-۸۸۸۸xxxx</li>
+                    <li>ساعت کاری: ۸ صبح تا ۱۰ شب</li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>ما را دنبال کنید</h4>
+                <p style="font-size: 0.9rem; margin-bottom: 10px; color: #ccc;">برای دیدن عکس‌های پاییزی و ویدیوهای آقای طهماسب:</p>
+                <div style="display: flex; gap: 10px;">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#C5A059" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+                </div>
+            </div>
+        </div>
+        <div class="copyright">
+            تمامی حقوق برای کافه نان آنان محفوظ است. | طراحی با ❤️ در پاییز ۱۴۰۲
+        </div>
+    </footer>
+
+    <script>
+        // اسکریپت ساده برای افزودن به سبد خرید
+        let cartCount = 0;
+        const badge = document.querySelector('.cart-badge');
+
+        function addToCart() {
+            cartCount++;
+            badge.textContent = cartCount;
+            badge.style.transform = "scale(1.5)";
+            setTimeout(() => {
+                badge.style.transform = "scale(1)";
+            }, 200);
+            
+            // می‌توانید اینجا یک پیام Toast هم نمایش دهید
+            alert("محصول با عطر پاییزی به سبد شما اضافه شد! 🍂");
+        }
+    </script>
+
+</body>
+</html>
